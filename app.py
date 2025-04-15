@@ -4,6 +4,7 @@ import requests
 # 🧭 Tela larga
 st.set_page_config(layout="wide")
 
+api_key = st.secrets["OMDB_API_KEY"]
 
 # 🎨 CSS para os cards horizontais
 st.markdown("""
