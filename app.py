@@ -1,12 +1,12 @@
 import streamlit as st
 import requests
 
-# 🧭 Tela larga
+# Tela larga
 st.set_page_config(layout="wide")
 
 api_key = st.secrets["OMDB_API_KEY"]
 
-# 🎨 CSS para os cards horizontais
+# CSS para os cards horizontais
 st.markdown("""
     <style>
     .card {
@@ -30,7 +30,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 🔍 Busca de filmes
+# Busca de filmes
 def buscar_filmes(SEARCH_TERM, page=1):
     url = f'http://www.omdbapi.com/?apikey={api_key}&s={SEARCH_TERM}&page={page}'
     response = requests.get(url)
@@ -43,16 +43,16 @@ def buscar_filmes(SEARCH_TERM, page=1):
 st.title("🎬 Catálogo Virtual")
 
 # Página atual
-# 🔢 Inicializa a página (só uma vez)
+# Inicializa a página (só uma vez)
 if "pagina_atual" not in st.session_state:
     st.session_state.pagina_atual = 1
 
-# 📝 Campo de busca
+# Campo de busca
 title = st.text_input("Pesquisar filme:")
 
 st.markdown("<br>",unsafe_allow_html=True)
 
-# 🧠 Verifica se foi digitado algo
+# Verifica se foi digitado algo
 if title.strip():
     try:
         filmes, total = buscar_filmes(title, st.session_state.pagina_atual)
@@ -62,7 +62,7 @@ if title.strip():
         st.write(f"🔍 Resultados para: **{title}**")
         st.write(f" 🎯 Total encontrados: {total_filmes}")
 
-        # 🎬 Mostra os 10 cards
+        # Mostra os 10 cards
         cols = st.columns(10)
         for idx, filme in enumerate(filmes):
             with cols[idx]:
@@ -86,7 +86,7 @@ if title.strip():
     </div>
     """, unsafe_allow_html=True)
 
-    # 🔁 Botões
+    # Botões
     col1, col2, col3 = st.columns([1, 2, 1])
     with col1:
         if st.button("⬅️ Anterior") and st.session_state.pagina_atual > 1:
