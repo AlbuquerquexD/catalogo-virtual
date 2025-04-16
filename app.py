@@ -1,34 +1,28 @@
 import streamlit as st
 import requests
 
+
 # Tela larga
 st.set_page_config(layout="wide")
 
-api_key = st.secrets["OMDB_API_KEY"]
-
-# CSS para os cards horizontais
+# css nas imagens com leve zoom
 st.markdown("""
     <style>
-    .card {
-        background-color: #1f1f1f;
-        border-radius: 10px;
-        padding: 10px;
-        text-align: center;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-        transition: transform 0.2s ease;
-    }
-    .card:hover {
-        transform: scale(1.05);
-        background-color: #2a2a2a;
-    }
-    .card img {
+    .zoom-img {
         border-radius: 8px;
         height: 240px;
-        object-fit: cover;
         width: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+        cursor: zoom-in;
+    }
+    .zoom-img:hover {
+        transform: scale(1.2);
     }
     </style>
 """, unsafe_allow_html=True)
+
+api_key = st.secrets["OMDB_API_KEY"]
 
 # Busca de filmes
 def buscar_filmes(SEARCH_TERM, page=1):
@@ -39,16 +33,22 @@ def buscar_filmes(SEARCH_TERM, page=1):
     total = int(data.get('totalResults', 0)) if 'totalResults' in data else 0
     return filmes, total
 
-# Título e input
+
 st.title("🎬 Catálogo Virtual")
 
-# Página atual
-# Inicializa a página (só uma vez)
 if "pagina_atual" not in st.session_state:
     st.session_state.pagina_atual = 1
 
-# Campo de busca
-title = st.text_input("Pesquisar filme:")
+if "ultimo_titulo" not in st.session_state:
+    st.session_state.ultimo_titulo = ""
+
+# Input da pesquisa
+title = st.text_input("Pesquisar :")
+
+# Detecta mudança de título e reseta a página
+if title.strip() and title != st.session_state.ultimo_titulo:
+    st.session_state.pagina_atual = 1
+    st.session_state.ultimo_titulo = title
 
 st.markdown("<br>",unsafe_allow_html=True)
 
@@ -60,7 +60,7 @@ if title.strip():
         total_filmes = total
 
         st.write(f"🔍 Resultados para: **{title}**")
-        st.write(f" 🎯 Total encontrados: {total_filmes}")
+        st.write(f" 🎯 Total encontrados: **{total_filmes}**")
 
         # Mostra os 10 cards
         cols = st.columns(10)
@@ -69,7 +69,7 @@ if title.strip():
                 st.markdown('<div class="card">', unsafe_allow_html=True)
 
                 poster = filme['Poster'] if filme['Poster'] != 'N/A' else "https://via.placeholder.com/150x220?text=Sem+Imagem"
-                st.markdown(f'<img src="{poster}">', unsafe_allow_html=True)
+                st.markdown(f'<img src="{poster}" class="zoom-img">', unsafe_allow_html=True)
                 st.markdown(f"<strong>{filme['Title']}</strong>", unsafe_allow_html=True)
                 st.caption(f"📅 {filme['Year']} | 🎞️ {filme['Type']}")
 
@@ -82,7 +82,7 @@ if title.strip():
     # 📄 Indicador de página (centralizado, com estilo)
     st.markdown(f"""
     <div style='text-align: center; font-size: 18px; font-weight: 600; padding-top: 10px; color: #f0f0f0;'>
-        📄 Página <span style='color:#4FC3F7'>{st.session_state.pagina_atual}</span> de <span style='color:#81C784'>{total_paginas}</span>
+        📄 Página <span>{st.session_state.pagina_atual}</span> de <span>{total_paginas}</span>
     </div>
     """, unsafe_allow_html=True)
 

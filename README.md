@@ -17,5 +17,35 @@ Um app simples e elegante feito com **Streamlit**, que permite buscar filmes usa
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/catalogo-virtual.git
+   git clone https://github.com/AlbuquerquexD/catalogo-virtual.git
    cd catalogo-virtual
+
+2. Crie um ambiente virtual (opcional, mas recomendado):
+
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate     # Windows
+   source venv/bin/activate  # macOS/Linux
+
+3. pip install -r requirements.txt
+
+4. Obtenha uma chave da API da OMDb:
+
+   * Acesse: https://www.omdbapi.com/apikey.aspx
+
+   * Faça um cadastro gratuito
+
+   * Você receberá uma chave de API por e-mail
+
+5. Subistitua na (linha 26)
+   ```bash
+      api_key = st.secrets["OMDB_API_KEY"] 
+      por: api_key = chave da API da OMDb (que foi criada)
+
+6. Execute o projeto localmente com Streamlit: 
+   ```bash
+      streamlit run app.py
+
+👨‍💻 Autor
+
+Desenvolvido por Antony Albuquerque — para fins de estudo, prática com APIs públicas e projetos com Streamlit.
