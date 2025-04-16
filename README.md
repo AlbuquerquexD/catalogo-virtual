@@ -37,7 +37,7 @@ Um app simples e elegante feito com **Streamlit**, que permite buscar filmes usa
 
    * Você receberá uma chave de API por e-mail
 
-5. Subistitua na (linha 26)
+5. Subistitua na (linha 25)
    ```bash
       api_key = st.secrets["OMDB_API_KEY"] 
       por: api_key = chave da API da OMDb (que foi criada)
