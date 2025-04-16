@@ -1,11 +1,9 @@
 import streamlit as st
 import requests
 
-
-# Tela larga
 st.set_page_config(layout="wide")
 
-# css nas imagens com leve zoom
+# css nas imagens
 st.markdown("""
     <style>
     .zoom-img {
@@ -32,7 +30,6 @@ def buscar_filmes(SEARCH_TERM, page=1):
     filmes = data.get('Search', [])
     total = int(data.get('totalResults', 0)) if 'totalResults' in data else 0
     return filmes, total
-
 
 st.title("🎬 Catálogo Virtual")
 
@@ -79,7 +76,7 @@ if title.strip():
         st.error(f"Erro na busca: {e}")
         total_paginas = 1
 
-    # 📄 Indicador de página (centralizado, com estilo)
+    # Indicador de página
     st.markdown(f"""
     <div style='text-align: center; font-size: 18px; font-weight: 600; padding-top: 10px; color: #f0f0f0;'>
         📄 Página <span>{st.session_state.pagina_atual}</span> de <span>{total_paginas}</span>
