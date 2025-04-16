@@ -2,6 +2,12 @@
 
 Um app simples e elegante feito com **Streamlit**, que permite buscar filmes usando a API gratuita da **OMDb (Open Movie Database)**. Os resultados são exibidos como cartões com imagem, título, ano e tipo, e organizados em uma prateleira de 10 filmes por página.
 
+## 🔗 Acesse o Projeto Online
+
+Você pode visualizar e testar a aplicação diretamente no Streamlit Cloud:
+
+👉 [Clique aqui para acessar o Catálogo Virtual de Filmes](https://catalogo-virtual-page.streamlit.app/)
+
 ---
 
 ## 🚀 Funcionalidades
